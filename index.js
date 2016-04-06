@@ -15,8 +15,24 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM users', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { response.render('pages/db', {results: result.rows} ); }
+    });
+  });
+});
+
 app.get('/cool', function(request, response) {
-  response.send(cool());
+  var res = '';
+  var loop = process.env.TIMES || 5;
+  for (i=0; i < loop; i++)
+   res += cool();
+  response.send(process.env.CSEC);
 });
 
 app.listen(app.get('port'), function() {
