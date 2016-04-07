@@ -1,4 +1,3 @@
-var cool = require('cool-ascii-faces');
 var express = require('express');
 var pg = require('pg');
 var app = express();
@@ -15,10 +14,10 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
-app.get('/db', function (request, response) {
+app.get('/db', function(request, response) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM users', function(err, result) {
-      done();
+      //done();
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
@@ -27,12 +26,14 @@ app.get('/db', function (request, response) {
   });
 });
 
+app.post('/users', function
+
 app.get('/cool', function(request, response) {
   var res = '';
   var loop = process.env.TIMES || 5;
   for (i=0; i < loop; i++)
-   res += cool();
-  response.send(process.env.CSEC);
+   res += "( o)___(o )\n";
+  response.send();
 });
 
 app.listen(app.get('port'), function() {
